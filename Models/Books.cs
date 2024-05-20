@@ -8,7 +8,7 @@ namespace BooksApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
         public DateTime ReleaseDate { get; set; }
     }
 }

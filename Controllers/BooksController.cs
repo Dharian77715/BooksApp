@@ -43,29 +43,29 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateBook([FromBody] BooksDTO BooksDTO)
+    public async Task<ActionResult> CreateBook([FromBody] CreateBookDTO CreateBookDTO)
     {
 
-        var bookExists = await _context.Books.AnyAsync(b => b.Title == BooksDTO.Title);
+        var bookExists = await _context.Books.AnyAsync(b => b.Title == CreateBookDTO.Title);
 
         if (bookExists)
         {
-            return BadRequest($"El libro \"{BooksDTO.Title}\" ya existe.");
+            return BadRequest($"El libro \"{CreateBookDTO.Title}\" ya existe.");
         }
 
-        var book = _mapper.Map<Book>(BooksDTO);
+        var book = _mapper.Map<Book>(CreateBookDTO);
 
         _context.Add(book);
         await _context.SaveChangesAsync();
 
-        var bookDTO = _mapper.Map<BooksDTO>(book);
+        var bookDTO = _mapper.Map<CreateBookDTO>(book);
 
         return CreatedAtRoute("ObtenerLibro", new { id = book.Id }, bookDTO);
     }
 
     [HttpPut("{id:int}")]
 
-    public async Task<ActionResult> UpdateBook(BooksDTO BooksDTO, int id)
+    public async Task<ActionResult> UpdateBook(CreateBookDTO CreateBookDTO, int id)
     {
         var bookExists = await _context.Books.AnyAsync(b => b.Id == id);
 
@@ -74,7 +74,7 @@ public class BooksController : ControllerBase
             return NotFound($"El libro con el id {id} no fue encontrado");
         }
 
-        var book = _mapper.Map<Book>(BooksDTO);
+        var book = _mapper.Map<Book>(CreateBookDTO);
 
         book.Id = id;
 

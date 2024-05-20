@@ -44,29 +44,29 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateAuthor([FromBody] AuthorsDTO AuthorsDTO)
+    public async Task<ActionResult> CreateAuthor([FromBody] CreateAuthorDTO CreateAuthorDTO)
     {
 
-        var authorExists = await _context.Authors.AnyAsync(a => a.Name == AuthorsDTO.Name);
+        var authorExists = await _context.Authors.AnyAsync(a => a.Name == CreateAuthorDTO.Name);
 
         if (authorExists)
         {
-            return BadRequest($"El autor \"{AuthorsDTO.Name}\" ya existe.");
+            return BadRequest($"El autor \"{CreateAuthorDTO.Name}\" ya existe.");
         }
 
-        var author = _mapper.Map<Author>(AuthorsDTO);
+        var author = _mapper.Map<Author>(CreateAuthorDTO);
 
         _context.Add(author);
         await _context.SaveChangesAsync();
 
-        var authorDTO = _mapper.Map<AuthorsDTO>(author);
+        var authorDTO = _mapper.Map<CreateAuthorDTO>(author);
 
         return CreatedAtRoute("ObtenerAutor", new { id = author.Id }, authorDTO);
     }
 
     [HttpPut("{id:int}")]
 
-    public async Task<ActionResult> UpdateAuthor(AuthorsDTO AuthorsDTO, int id)
+    public async Task<ActionResult> UpdateAuthor(CreateAuthorDTO CreateAuthorDTO, int id)
     {
         var authorExists = await _context.Authors.AnyAsync(a => a.Id == id);
 
@@ -75,7 +75,7 @@ public class AuthorsController : ControllerBase
             return NotFound($"El autor con el id {id} no fue encontrado");
         }
 
-        var author = _mapper.Map<Author>(AuthorsDTO);
+        var author = _mapper.Map<Author>(CreateAuthorDTO);
 
         author.Id = id;
 

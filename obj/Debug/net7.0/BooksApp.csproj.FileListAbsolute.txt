@@ -66,3 +66,4 @@
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/obj/Debug/net7.0/ref/BooksApp.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/AutoMapper.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/obj/Debug/net7.0/BooksApp.sourcelink.json
