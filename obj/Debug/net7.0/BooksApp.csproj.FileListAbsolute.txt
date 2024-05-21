@@ -67,3 +67,11 @@
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/AutoMapper.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/obj/Debug/net7.0/BooksApp.sourcelink.json
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/Azure.Core.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/Azure.Storage.Blobs.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/Azure.Storage.Common.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.ClientModel.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.IO.Hashing.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.Memory.Data.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/BooksApp.staticwebassets.runtime.json

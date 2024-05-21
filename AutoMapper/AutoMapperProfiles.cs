@@ -10,27 +10,15 @@ namespace BooksApp.AutoMapper
         public MappingProfile()
 
         {
-
             CreateMap<Book, BooksDTO>().ReverseMap();
-            CreateMap<Book, CreateBookDTO>();
+            CreateMap<CreateBookDTO, Book>().ForMember(b => b.Photo, options => options.Ignore());
 
             CreateMap<Author, AuthorsDTO>().ReverseMap();
-            CreateMap<Author, CreateAuthorDTO>();
+            CreateMap<CreateAuthorDTO, Author>().ForMember(a => a.Photo, options => options.Ignore());
 
             CreateMap<Genre, GenreDTO>().ReverseMap();
-            CreateMap<Genre, CreateGenreDTO>();
+            CreateMap<CreateGenreDTO, Genre>();
 
-            // CreateMap<MovieGenre, MovieGenreDTO>();
-
-
-
-            //Dto to Domain
-
-            // CreateMap<BooksDTO, Book>();
-            // CreateMap<AuthorsDTO, Author>();
-            // CreateMap<Actor, MovieActorDTO>();
-
-            // CreateMap<MovieGenreDTO, MovieGenre>().ForMember(m => m.ID, opt => opt.Ignore());
 
         }
 

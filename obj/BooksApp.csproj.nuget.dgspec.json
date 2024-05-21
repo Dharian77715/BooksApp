@@ -68,6 +68,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "azure.storage.blobs": {
+              "target": "Package",
+              "version": "[12.20.0, )"
             }
           },
           "imports": [

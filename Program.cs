@@ -1,6 +1,8 @@
 ﻿using BooksApp;
 using BooksApp.AutoMapper;
+using BooksApp.Services;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
+// Configure FileManage
+builder.Services.AddTransient<IFileManager, LocalFileManager>();
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

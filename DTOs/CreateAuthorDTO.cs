@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BooksApp.Validations;
 
 namespace BooksApp.DTOs
 {
@@ -9,6 +10,9 @@ namespace BooksApp.DTOs
         public string Name { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        [ValidateImage(ValidFileTypes: ValidFileTypes.Image)]
+        public IFormFile Photo { get; set; }
 
     }
 }

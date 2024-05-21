@@ -4,6 +4,7 @@ using BooksApp.DTOs;
 using BooksApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BooksApp.Services;
 
 
 namespace Authors.Controllers;
@@ -14,11 +15,14 @@ public class AuthorsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IFileManager _fileManager;
+    private readonly string container = "autores";
 
-    public AuthorsController(ApplicationDbContext context, IMapper mapper)
+    public AuthorsController(ApplicationDbContext context, IMapper mapper, IFileManager fileManager)
     {
         _context = context;
         _mapper = mapper;
+        _fileManager = fileManager;
     }
 
     [HttpGet]
@@ -44,7 +48,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateAuthor([FromBody] CreateAuthorDTO CreateAuthorDTO)
+    public async Task<ActionResult> CreateAuthor([FromForm] CreateAuthorDTO CreateAuthorDTO)
     {
 
         var authorExists = await _context.Authors.AnyAsync(a => a.Name == CreateAuthorDTO.Name);
@@ -56,30 +60,55 @@ public class AuthorsController : ControllerBase
 
         var author = _mapper.Map<Author>(CreateAuthorDTO);
 
+        if (CreateAuthorDTO.Photo != null)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await CreateAuthorDTO.Photo.CopyToAsync(memoryStream);
+                var content = memoryStream.ToArray();
+                var extension = Path.GetExtension(CreateAuthorDTO.Photo.FileName);
+                author.Photo = await _fileManager.SaveFile(content, extension, container,
+                    CreateAuthorDTO.Photo.ContentType);
+            }
+        }
+
         _context.Add(author);
         await _context.SaveChangesAsync();
 
-        var authorDTO = _mapper.Map<CreateAuthorDTO>(author);
+        var authorDTO = _mapper.Map<CreateAuthorDTO, Author>(CreateAuthorDTO);
 
         return CreatedAtRoute("ObtenerAutor", new { id = author.Id }, authorDTO);
     }
 
     [HttpPut("{id:int}")]
 
-    public async Task<ActionResult> UpdateAuthor(CreateAuthorDTO CreateAuthorDTO, int id)
+    public async Task<ActionResult> UpdateAuthor([FromForm] CreateAuthorDTO CreateAuthorDTO, int id)
     {
-        var authorExists = await _context.Authors.AnyAsync(a => a.Id == id);
 
-        if (!authorExists)
+        var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
+
+        if (author == null)
         {
-            return NotFound($"El autor con el id {id} no fue encontrado");
+            return NotFound();
         }
 
-        var author = _mapper.Map<Author>(CreateAuthorDTO);
+        author = _mapper.Map(CreateAuthorDTO, author);
 
-        author.Id = id;
 
-        _context.Update(author);
+        if (CreateAuthorDTO.Photo != null)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await CreateAuthorDTO.Photo.CopyToAsync(memoryStream);
+                var content = memoryStream.ToArray();
+                var extension = Path.GetExtension(CreateAuthorDTO.Photo.FileName);
+                author.Photo = await _fileManager.EditFile(content, extension, container,
+                author.Photo, CreateAuthorDTO.Photo.ContentType);
+            }
+        }
+
+        // _context.Update(author);
+        // _context.Entry(author).State = EntityState.Modified;
         await _context.SaveChangesAsync();
         return Ok();
     }

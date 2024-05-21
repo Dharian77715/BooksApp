@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BooksApp.DTOs;
 using BooksApp.Models;
+using BooksApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,14 @@ public class BooksController : ControllerBase
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public BooksController(ApplicationDbContext context, IMapper mapper)
+    private readonly IFileManager _fileManager;
+    private readonly string container = "libros";
+
+    public BooksController(ApplicationDbContext context, IMapper mapper, IFileManager fileManager)
     {
         _context = context;
         _mapper = mapper;
+        _fileManager = fileManager;
     }
 
     [HttpGet]
@@ -43,7 +48,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateBook([FromBody] CreateBookDTO CreateBookDTO)
+    public async Task<ActionResult> CreateBook([FromForm] CreateBookDTO CreateBookDTO)
     {
 
         var bookExists = await _context.Books.AnyAsync(b => b.Title == CreateBookDTO.Title);
@@ -55,30 +60,53 @@ public class BooksController : ControllerBase
 
         var book = _mapper.Map<Book>(CreateBookDTO);
 
+
+        if (CreateBookDTO.Photo != null)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+                var content = memoryStream.ToArray();
+                var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
+                book.Photo = await _fileManager.SaveFile(content, extension, container,
+                    CreateBookDTO.Photo.ContentType);
+            }
+        }
+
         _context.Add(book);
         await _context.SaveChangesAsync();
 
-        var bookDTO = _mapper.Map<CreateBookDTO>(book);
+        var bookDTO = _mapper.Map<CreateBookDTO, Book>(CreateBookDTO);
 
         return CreatedAtRoute("ObtenerLibro", new { id = book.Id }, bookDTO);
     }
 
     [HttpPut("{id:int}")]
 
-    public async Task<ActionResult> UpdateBook(CreateBookDTO CreateBookDTO, int id)
+    public async Task<ActionResult> UpdateBook([FromForm] CreateBookDTO CreateBookDTO, int id)
     {
-        var bookExists = await _context.Books.AnyAsync(b => b.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
 
-        if (!bookExists)
+        if (book == null)
         {
-            return NotFound($"El libro con el id {id} no fue encontrado");
+            return NotFound();
         }
 
-        var book = _mapper.Map<Book>(CreateBookDTO);
+        book = _mapper.Map(CreateBookDTO, book);
 
-        book.Id = id;
 
-        _context.Update(book);
+        if (CreateBookDTO.Photo != null)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+                var content = memoryStream.ToArray();
+                var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
+                book.Photo = await _fileManager.EditFile(content, extension, container,
+                book.Photo, CreateBookDTO.Photo.ContentType);
+            }
+        }
+
         await _context.SaveChangesAsync();
         return Ok();
     }
