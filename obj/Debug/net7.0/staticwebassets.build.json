@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WnnHXGNBZpyHNJptSYBY70K3poquGUztPNvVRQWORbw=",
+  "Hash": "S4i6rekorCxEu9Hwd+ySoTr+sCoiRztcKRb58E6TEn8=",
   "Source": "BooksApp",
   "BasePath": "_content/BooksApp",
   "Mode": "Default",
@@ -53,6 +53,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/authors/a251b352-11d9-464e-a59d-7350a5cae41c.jpg"
+    },
+    {
+      "Identity": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/autores/cc9f3360-68bb-4255-98ae-23ba21460ffa.jpg",
+      "SourceId": "BooksApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/",
+      "BasePath": "_content/BooksApp",
+      "RelativePath": "autores/cc9f3360-68bb-4255-98ae-23ba21460ffa.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/autores/cc9f3360-68bb-4255-98ae-23ba21460ffa.jpg"
+    },
+    {
+      "Identity": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/29c16d87-a118-49f9-9d69-9e97b19806d9.jpg",
+      "SourceId": "BooksApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/",
+      "BasePath": "_content/BooksApp",
+      "RelativePath": "libros/29c16d87-a118-49f9-9d69-9e97b19806d9.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/libros/29c16d87-a118-49f9-9d69-9e97b19806d9.jpg"
     },
     {
       "Identity": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/2c6922ba-a692-4c8c-acd1-ae9eb4596c93.jpg",
@@ -110,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/libros/8626fcc9-9156-4dcf-b65a-aa5908a57793.jpg"
+    },
+    {
+      "Identity": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/9a4bf3ff-ef41-466c-8304-298940a6340b.jpg",
+      "SourceId": "BooksApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/",
+      "BasePath": "_content/BooksApp",
+      "RelativePath": "libros/9a4bf3ff-ef41-466c-8304-298940a6340b.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/libros/9a4bf3ff-ef41-466c-8304-298940a6340b.jpg"
     }
   ]
 }

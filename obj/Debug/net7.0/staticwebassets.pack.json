@@ -9,6 +9,14 @@
       "PackagePath": "staticwebassets/authors/a251b352-11d9-464e-a59d-7350a5cae41c.jpg"
     },
     {
+      "Id": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/autores/cc9f3360-68bb-4255-98ae-23ba21460ffa.jpg",
+      "PackagePath": "staticwebassets/autores/cc9f3360-68bb-4255-98ae-23ba21460ffa.jpg"
+    },
+    {
+      "Id": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/29c16d87-a118-49f9-9d69-9e97b19806d9.jpg",
+      "PackagePath": "staticwebassets/libros/29c16d87-a118-49f9-9d69-9e97b19806d9.jpg"
+    },
+    {
       "Id": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/2c6922ba-a692-4c8c-acd1-ae9eb4596c93.jpg",
       "PackagePath": "staticwebassets/libros/2c6922ba-a692-4c8c-acd1-ae9eb4596c93.jpg"
     },
@@ -19,6 +27,10 @@
     {
       "Id": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/8626fcc9-9156-4dcf-b65a-aa5908a57793.jpg",
       "PackagePath": "staticwebassets/libros/8626fcc9-9156-4dcf-b65a-aa5908a57793.jpg"
+    },
+    {
+      "Id": "/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/wwwroot/libros/9a4bf3ff-ef41-466c-8304-298940a6340b.jpg",
+      "PackagePath": "staticwebassets/libros/9a4bf3ff-ef41-466c-8304-298940a6340b.jpg"
     },
     {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.BooksApp.Microsoft.AspNetCore.StaticWebAssets.props",
