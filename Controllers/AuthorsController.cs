@@ -107,8 +107,7 @@ public class AuthorsController : ControllerBase
             }
         }
 
-        // _context.Update(author);
-        // _context.Entry(author).State = EntityState.Modified;
+
         await _context.SaveChangesAsync();
         return Ok();
     }

@@ -50,7 +50,7 @@ public class ComentariosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(int bookId, CreateCommentDTO CreateCommentDTO)
+    public async Task<ActionResult> CreateComment(int bookId, CreateCommentDTO CreateCommentDTO)
     {
         var bookExists = await _context.Books.AnyAsync(bookDB => bookDB.Id == bookId);
 
@@ -70,26 +70,41 @@ public class ComentariosController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> Put(int libroId, int id, CreateCommentDTO CreateCommentDTO)
+    public async Task<ActionResult> UpdateComment(int bookId, int id, CreateCommentDTO CreateCommentDTO)
     {
-        var existeLibro = await _context.Books.AnyAsync(libroDB => libroDB.Id == libroId);
+        var bookExists = await _context.Books.AnyAsync(bookDB => bookDB.Id == bookId);
 
-        if (!existeLibro)
+        if (!bookExists)
         {
             return NotFound();
         }
 
-        var existeComentario = await _context.Comments.AnyAsync(comentarioDB => comentarioDB.Id == id);
+        var commentExists = await _context.Comments.AnyAsync(commentDB => commentDB.Id == id);
 
-        if (!existeComentario)
+        if (!commentExists)
         {
             return NotFound();
         }
 
-        var comentario = _mapper.Map<Comment>(CreateCommentDTO);
-        comentario.Id = id;
-        comentario.BookId = libroId;
-        _context.Update(comentario);
+        var comment = _mapper.Map<Comment>(CreateCommentDTO);
+        comment.Id = id;
+        comment.BookId = bookId;
+        _context.Update(comment);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteComment(int id)
+    {
+        var comment = await _context.Comments.FindAsync(id);
+
+        if (comment == null)
+        {
+            return NotFound();
+        }
+
+        _context.Remove(comment);
         await _context.SaveChangesAsync();
         return NoContent();
     }

@@ -25,7 +25,7 @@ public class TypeBinder<T> : IModelBinder
         }
         catch
         {
-            bindingContext.ModelState.TryAddModelError(PropertyName, "Valor inválido para tipo List<int>");
+            bindingContext.ModelState.TryAddModelError(PropertyName, "El tipo List<int> no es un valor valido");
         }
 
         return Task.CompletedTask;
