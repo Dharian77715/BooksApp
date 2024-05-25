@@ -13,6 +13,6 @@ namespace BooksApp.DTOs
         public string Photo { get; set; }
         public List<GenreDTO> Genres { get; set; }
 
-        // public List<CommentDTO> Comments { get; set; }
+        public List<CommentDTO> Comments { get; set; }
     }
 }

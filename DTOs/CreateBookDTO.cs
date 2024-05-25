@@ -16,7 +16,7 @@ namespace BooksApp.DTOs
         [ValidateImage(ValidFileTypes: ValidFileTypes.Image)]
         public IFormFile Photo { get; set; }
 
-        // [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
+        [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
         public List<int> GenresIds { get; set; }
 
     }
