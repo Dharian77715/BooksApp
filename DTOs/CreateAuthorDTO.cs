@@ -13,6 +13,7 @@ namespace BooksApp.DTOs
 
         [ValidateImage(ValidFileTypes: ValidFileTypes.Image)]
         public IFormFile Photo { get; set; }
+        public int SexId { get; set; }
 
     }
 }

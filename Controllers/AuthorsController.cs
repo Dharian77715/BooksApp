@@ -28,7 +28,9 @@ public class AuthorsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<AuthorsDTO>>> GetAuthors()
     {
-        var authors = await _context.Authors.ToListAsync();
+        var authors = await _context.Authors
+        .Include(a => a.Sex)
+        .ToListAsync();
         return _mapper.Map<List<AuthorsDTO>>(authors);
     }
 
@@ -36,7 +38,9 @@ public class AuthorsController : ControllerBase
     public async Task<ActionResult<List<AuthorsDTO>>> GetAuthorById(int id)
     {
 
-        var author = await _context.Authors.SingleOrDefaultAsync(a => a.Id == id);
+        var author = await _context.Authors
+        .Include(a => a.Sex)
+        .SingleOrDefaultAsync(a => a.Id == id);
 
         if (author == null)
         {

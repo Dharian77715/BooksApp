@@ -11,5 +11,7 @@ namespace BooksApp.DTOs
 
         public DateTime DateOfBirth { get; set; }
         public string Photo { get; set; }
+
+        public string SexName { get; set; }
     }
 }

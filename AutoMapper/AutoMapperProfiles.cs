@@ -20,9 +20,13 @@ namespace BooksApp.AutoMapper
                 .ForMember(dest => dest.Photo, opt => opt.Ignore())
                 .ForMember(dest => dest.BooksGenres, opt => opt.MapFrom(MapBooksGenres));
 
-            CreateMap<Author, AuthorsDTO>().ReverseMap();
+
+            CreateMap<Author, AuthorsDTO>()
+                .ForMember(dest => dest.SexName, opt => opt.MapFrom(src => src.Sex.Name));
+
             CreateMap<CreateAuthorDTO, Author>()
-            .ForMember(a => a.Photo, options => options.Ignore());
+                .ForMember(a => a.Photo, options => options.Ignore());
+
 
             CreateMap<Genre, GenreDTO>().ReverseMap();
             CreateMap<CreateGenreDTO, Genre>();

@@ -11,6 +11,29 @@ namespace BooksApp.Models
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Photo { get; set; }
+        public int SexId { get; set; }
+        public Sex Sex { get; set; }
+
+        public string SexName
+        {
+            get
+            {
+
+                if (SexId == 1)
+                {
+                    return "Masculino";
+                }
+                else if (SexId == 2)
+                {
+                    return "Femenino";
+                }
+                else
+                {
+                    return "indefinido";
+                }
+
+            }
+        }
     }
 }
 
