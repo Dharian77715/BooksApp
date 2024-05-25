@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240523011639_Initial")]
+    [Migration("20240525034540_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,42 @@ namespace BooksApp.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("BooksApp.Models.BooksGenres", b =>
+                {
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenreId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BooksGenres");
+                });
+
+            modelBuilder.Entity("BooksApp.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("BooksApp.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -101,6 +137,48 @@ namespace BooksApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sexes");
+                });
+
+            modelBuilder.Entity("BooksApp.Models.BooksGenres", b =>
+                {
+                    b.HasOne("BooksApp.Models.Book", "Book")
+                        .WithMany("BooksGenres")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BooksApp.Models.Genre", "Genre")
+                        .WithMany("BooksGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("BooksApp.Models.Comment", b =>
+                {
+                    b.HasOne("BooksApp.Models.Book", "Book")
+                        .WithMany("Comments")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("BooksApp.Models.Book", b =>
+                {
+                    b.Navigation("BooksGenres");
+
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("BooksApp.Models.Genre", b =>
+                {
+                    b.Navigation("BooksGenres");
                 });
 #pragma warning restore 612, 618
         }

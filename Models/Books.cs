@@ -11,6 +11,11 @@ namespace BooksApp.Models
         public string Title { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string Photo { get; set; }
+
+        public List<Comment> Comments { get; set; }
+        public List<BooksGenres> BooksGenres { get; set; }
+
+
     }
 }
 

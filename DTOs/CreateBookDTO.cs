@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using BooksApp.Helpers;
 using BooksApp.Validations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BooksApp.DTOs
 {
@@ -13,6 +15,9 @@ namespace BooksApp.DTOs
 
         [ValidateImage(ValidFileTypes: ValidFileTypes.Image)]
         public IFormFile Photo { get; set; }
+
+        // [ModelBinder(BinderType = typeof(TypeBinder<List<int>>))]
+        public List<int> GenresIds { get; set; }
 
     }
 }

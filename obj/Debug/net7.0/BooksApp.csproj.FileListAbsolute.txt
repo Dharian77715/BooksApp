@@ -75,3 +75,8 @@
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.IO.Hashing.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.Memory.Data.dll
 /Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/BooksApp.staticwebassets.runtime.json
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.Net.Http.Json.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.Text.Encodings.Web.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/System.Text.Json.dll
+/Users/dharianalcantaraaquino/Desktop/C# all/BooksApp/BooksApp/bin/Debug/net7.0/runtimes/browser/lib/net7.0/System.Text.Encodings.Web.dll

@@ -11,5 +11,8 @@ namespace BooksApp.DTOs
 
         public DateTime ReleaseDate { get; set; }
         public string Photo { get; set; }
+        public List<GenreDTO> Genres { get; set; }
+
+        // public List<CommentDTO> Comments { get; set; }
     }
 }

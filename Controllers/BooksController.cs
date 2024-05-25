@@ -36,7 +36,9 @@ public class BooksController : ControllerBase
     public async Task<ActionResult<List<BooksDTO>>> GetBookById(int id)
     {
 
-        var book = await _context.Books.SingleOrDefaultAsync(b => b.Id == id);
+        var book = await _context.Books
+        .Include(bookDB => bookDB.BooksGenres)
+        .SingleOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
         {
@@ -47,69 +49,139 @@ public class BooksController : ControllerBase
         return Ok(BooksDTO);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> CreateBook([FromForm] CreateBookDTO CreateBookDTO)
-    {
+    // [HttpPost]
+    // public async Task<ActionResult> CreateBook([FromForm] CreateBookDTO CreateBookDTO)
+    // {
 
-        var bookExists = await _context.Books.AnyAsync(b => b.Title == CreateBookDTO.Title);
+    //     var bookExists = await _context.Books.AnyAsync(b => b.Title == CreateBookDTO.Title);
+
+    //     if (bookExists)
+    //     {
+    //         return BadRequest($"El libro \"{CreateBookDTO.Title}\" ya existe.");
+    //     }
+
+    //     var book = _mapper.Map<Book>(CreateBookDTO);
+
+
+    //     if (CreateBookDTO.Photo != null)
+    //     {
+    //         using (var memoryStream = new MemoryStream())
+    //         {
+    //             await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+    //             var content = memoryStream.ToArray();
+    //             var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
+    //             book.Photo = await _fileManager.SaveFile(content, extension, container,
+    //                 CreateBookDTO.Photo.ContentType);
+    //         }
+    //     }
+
+    //     _context.Add(book);
+    //     await _context.SaveChangesAsync();
+
+    //     var bookDTO = _mapper.Map<CreateBookDTO, Book>(CreateBookDTO);
+
+    //     return CreatedAtRoute("ObtenerLibro", new { id = book.Id }, bookDTO);
+    // }
+
+    // [HttpPut("{id:int}")]
+
+    // public async Task<ActionResult> UpdateBook([FromForm] CreateBookDTO CreateBookDTO, int id)
+    // {
+    //     var book = await _context.Books
+    //     .Include(b => b.BooksGenres)
+    //     .FirstOrDefaultAsync(b => b.Id == id);
+
+    //     if (book == null)
+    //     {
+    //         return NotFound();
+    //     }
+
+    //     book = _mapper.Map(CreateBookDTO, book);
+
+
+    //     if (CreateBookDTO.Photo != null)
+    //     {
+    //         using (var memoryStream = new MemoryStream())
+    //         {
+    //             await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+    //             var content = memoryStream.ToArray();
+    //             var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
+    //             book.Photo = await _fileManager.EditFile(content, extension, container,
+    //             book.Photo, CreateBookDTO.Photo.ContentType);
+    //         }
+    //     }
+
+    //     await _context.SaveChangesAsync();
+    //     return Ok();
+    // }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateBook([FromForm] CreateBookDTO createBookDTO)
+    {
+        var bookExists = await _context.Books.AnyAsync(b => b.Title == createBookDTO.Title);
 
         if (bookExists)
         {
-            return BadRequest($"El libro \"{CreateBookDTO.Title}\" ya existe.");
+            return BadRequest($"El libro \"{createBookDTO.Title}\" ya existe.");
         }
 
-        var book = _mapper.Map<Book>(CreateBookDTO);
+        var book = _mapper.Map<Book>(createBookDTO);
 
-
-        if (CreateBookDTO.Photo != null)
+        if (createBookDTO.Photo != null)
         {
             using (var memoryStream = new MemoryStream())
             {
-                await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+                await createBookDTO.Photo.CopyToAsync(memoryStream);
                 var content = memoryStream.ToArray();
-                var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
-                book.Photo = await _fileManager.SaveFile(content, extension, container,
-                    CreateBookDTO.Photo.ContentType);
+                var extension = Path.GetExtension(createBookDTO.Photo.FileName);
+                book.Photo = await _fileManager.SaveFile(content, extension, container, createBookDTO.Photo.ContentType);
             }
         }
 
         _context.Add(book);
         await _context.SaveChangesAsync();
 
-        var bookDTO = _mapper.Map<CreateBookDTO, Book>(CreateBookDTO);
+        var bookDTO = _mapper.Map<CreateBookDTO, Book>(createBookDTO);
 
         return CreatedAtRoute("ObtenerLibro", new { id = book.Id }, bookDTO);
     }
 
     [HttpPut("{id:int}")]
-
-    public async Task<ActionResult> UpdateBook([FromForm] CreateBookDTO CreateBookDTO, int id)
+    public async Task<ActionResult> UpdateBook([FromForm] CreateBookDTO createBookDTO, int id)
     {
-        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _context.Books
+            .Include(b => b.BooksGenres)
+            .FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
         {
             return NotFound();
         }
 
-        book = _mapper.Map(CreateBookDTO, book);
+        _mapper.Map(createBookDTO, book);
 
+        // Handle GenresIds
+        book.BooksGenres.Clear();
+        foreach (var genreId in createBookDTO.GenresIds)
+        {
+            book.BooksGenres.Add(new BooksGenres { BookId = book.Id, GenreId = genreId });
+        }
 
-        if (CreateBookDTO.Photo != null)
+        if (createBookDTO.Photo != null)
         {
             using (var memoryStream = new MemoryStream())
             {
-                await CreateBookDTO.Photo.CopyToAsync(memoryStream);
+                await createBookDTO.Photo.CopyToAsync(memoryStream);
                 var content = memoryStream.ToArray();
-                var extension = Path.GetExtension(CreateBookDTO.Photo.FileName);
-                book.Photo = await _fileManager.EditFile(content, extension, container,
-                book.Photo, CreateBookDTO.Photo.ContentType);
+                var extension = Path.GetExtension(createBookDTO.Photo.FileName);
+                book.Photo = await _fileManager.EditFile(content, extension, container, book.Photo, createBookDTO.Photo.ContentType);
             }
         }
 
         await _context.SaveChangesAsync();
         return Ok();
     }
+
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteBook(int id)
